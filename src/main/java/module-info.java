@@ -1,3 +1,5 @@
+import io.avaje.logging.slf4j.SLF4JSystemLoggerFinder;
+
 /**
  * Copyright (c) 2004-2021 QOS.ch
  * All rights reserved.
@@ -21,7 +23,7 @@
  * OF CONTRACT, TORT OR OTHERWISE,  ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-module org.slf4j.jdk.platform.logging {
+module io.avaje.logging.slf4j {
   requires org.slf4j;
-  provides java.lang.System.LoggerFinder with org.slf4j.jdk.platform.logging.SLF4JSystemLoggerFinder;
+  provides java.lang.System.LoggerFinder with SLF4JSystemLoggerFinder;
 }

@@ -22,7 +22,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *
  */
-package org.slf4j.jdk.platform.logging.test;
+package io.avaje.logging.slf4j.test;
 
 import java.io.PrintStream;
 import java.util.ArrayList;

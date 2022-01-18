@@ -22,14 +22,13 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *
  */
-package org.slf4j.jdk.platform.logging.test;
+package io.avaje.logging.slf4j.test;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
 import java.io.PrintStream;
 import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
@@ -55,7 +54,7 @@ class SLF4JPlatformLoggingTest {
   static final String SIMPLE_LOGGER_FILE_PROPERTY = PREFIX + "logFile";
   static final String SIMPLE_LOGGER_THREAD_NAME_PROPERTY = PREFIX + "showThreadName";
 
-  static final String EXPECTED_FINDER_CLASS = "org.slf4j.jdk.platform.logging.SLF4JSystemLoggerFinder";
+  static final String EXPECTED_FINDER_CLASS = "io.avaje.logging.slf4j.SLF4JSystemLoggerFinder";
 
 
   static final PrintStream oldErr = System.err;
