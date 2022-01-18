@@ -35,7 +35,6 @@ import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
 import java.lang.System.LoggerFinder;
 import java.util.List;
-import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -48,76 +47,75 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 /**
  * The present test is fragile in the sense that it sets up SimpleLogger
  * with a StringPrintStream and reverts to the old stream when done.
- * 
- * Any tests running simultaneously (and using SimpleLogger) will be affected 
+ * <p>
+ * Any tests running simultaneously (and using SimpleLogger) will be affected
  * by this. Moreover, since SimpleLogger is initialized by the call to LoggerFactory
  * and tests also using LoggerFactory will also be affected.
- * 
- * @author Ceki G&uuml;lc&uuml;
  *
+ * @author Ceki G&uuml;lc&uuml;
  */
 public class SLF4JPlatformLoggingTest {
 
-    static final String PREFIX = "org.slf4j.simpleLogger.";
-    static final String SIMPLE_LOGGER_FILE_PROPERTY = PREFIX + "logFile";
-    static final String SIMPLE_LOGGER_THREAD_NAME_PROPERTY = PREFIX + "showThreadName";
-    
-    static final String EXPECTED_FINDER_CLASS = "org.slf4j.jdk.platform.logging.SLF4JSystemLoggerFinder";
-    
+  static final String PREFIX = "org.slf4j.simpleLogger.";
+  static final String SIMPLE_LOGGER_FILE_PROPERTY = PREFIX + "logFile";
+  static final String SIMPLE_LOGGER_THREAD_NAME_PROPERTY = PREFIX + "showThreadName";
 
-    static final PrintStream oldErr = System.err;
-    static StringPrintStream SPS = new StringPrintStream(oldErr, false);
-    
-    @BeforeAll
-    static public void beforeClass() throws Exception {
-        System.setErr(SPS);
-        //System.setProperty(SIMPLE_LOGGER_FILE_PROPERTY, targetFile);
-        System.setProperty(SIMPLE_LOGGER_THREAD_NAME_PROPERTY, "false");
-    }
+  static final String EXPECTED_FINDER_CLASS = "org.slf4j.jdk.platform.logging.SLF4JSystemLoggerFinder";
 
-    @AfterAll
-    static public void afterClass() {
-        System.setErr(oldErr);
-        System.clearProperty(SIMPLE_LOGGER_THREAD_NAME_PROPERTY);
-    }
 
-    @AfterEach
-    public void tearDown() {
-        SPS.stringList.clear();
-    }
-    
-    @Test
-    public void smoke() throws IOException {
-        LoggerFinder finder = System.LoggerFinder.getLoggerFinder();
-        assertEquals(EXPECTED_FINDER_CLASS, finder.getClass().getName());
-        Logger systemLogger = finder.getLogger("smoke", null);
-        systemLogger.log(Level.INFO, "hello");
-        systemLogger.log(Level.INFO, "hello %s", "world");
-        
-        List<String> results = SPS.stringList;
-        assertEquals(2, results.size());
-        assertEquals("INFO smoke - hello", results.get(0));
-        assertEquals("INFO smoke - hello world", results.get(1));
-    }
+  static final PrintStream oldErr = System.err;
+  static StringPrintStream SPS = new StringPrintStream(oldErr, false);
 
-    @Test
-    public void throwTest() throws IOException {
-        LoggerFinder finder = System.LoggerFinder.getLoggerFinder();
-        assertEquals(EXPECTED_FINDER_CLASS, finder.getClass().getName());
+  @BeforeAll
+  static public void beforeClass() throws Exception {
+    System.setErr(SPS);
+    //System.setProperty(SIMPLE_LOGGER_FILE_PROPERTY, targetFile);
+    System.setProperty(SIMPLE_LOGGER_THREAD_NAME_PROPERTY, "false");
+  }
 
-        Logger systemLogger = finder.getLogger("throwTest", null);
-        systemLogger.log(Level.INFO, "we have a problem", new Exception());
-        
-        List<String> results = SPS.stringList;
-        //INFO throwTest - a problem
-        //java.lang.Exception
-        //        at org.slf4j.jdk.platform.logging/org.slf4j.jdk.platform.logging.SLF4JPlatformLoggingTest.throwTest(SLF4JPlatformLoggingTest.java:92)
-         
-        assertEquals("INFO throwTest - we have a problem", results.get(0));
-        assertEquals(Exception.class.getName(), results.get(1));
-        assertTrue(results.get(2).contains("at "));
-        assertTrue(results.get(2).contains(this.getClass().getName()));
-    }
+  @AfterAll
+  static public void afterClass() {
+    System.setErr(oldErr);
+    System.clearProperty(SIMPLE_LOGGER_THREAD_NAME_PROPERTY);
+  }
+
+  @AfterEach
+  public void tearDown() {
+    SPS.stringList.clear();
+  }
+
+  @Test
+  public void smoke() throws IOException {
+    LoggerFinder finder = System.LoggerFinder.getLoggerFinder();
+    assertEquals(EXPECTED_FINDER_CLASS, finder.getClass().getName());
+    Logger systemLogger = finder.getLogger("smoke", null);
+    systemLogger.log(Level.INFO, "hello");
+    systemLogger.log(Level.INFO, "hello %s", "world");
+
+    List<String> results = SPS.stringList;
+    assertEquals(2, results.size());
+    assertEquals("INFO smoke - hello", results.get(0));
+    assertEquals("INFO smoke - hello world", results.get(1));
+  }
+
+  @Test
+  public void throwTest() throws IOException {
+    LoggerFinder finder = System.LoggerFinder.getLoggerFinder();
+    assertEquals(EXPECTED_FINDER_CLASS, finder.getClass().getName());
+
+    Logger systemLogger = finder.getLogger("throwTest", null);
+    systemLogger.log(Level.INFO, "we have a problem", new Exception());
+
+    List<String> results = SPS.stringList;
+    //INFO throwTest - a problem
+    //java.lang.Exception
+    //        at org.slf4j.jdk.platform.logging/org.slf4j.jdk.platform.logging.SLF4JPlatformLoggingTest.throwTest(SLF4JPlatformLoggingTest.java:92)
+
+    assertEquals("INFO throwTest - we have a problem", results.get(0));
+    assertEquals(Exception.class.getName(), results.get(1));
+    assertTrue(results.get(2).contains("at "));
+    assertTrue(results.get(2).contains(this.getClass().getName()));
+  }
 
 
 }

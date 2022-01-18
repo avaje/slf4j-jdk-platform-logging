@@ -31,37 +31,39 @@ import java.util.List;
 
 public class StringPrintStream extends PrintStream {
 
-    public static final String LINE_SEP = System.getProperty("line.separator");
-    PrintStream other;
-    boolean duplicate = false;
+  public static final String LINE_SEP = System.getProperty("line.separator");
 
-    public List<String> stringList = Collections.synchronizedList(new ArrayList<String>());
+  PrintStream other;
 
-    public StringPrintStream(PrintStream ps, boolean duplicate) {
-        super(ps);
-        other = ps;
-        this.duplicate = duplicate;
-    }
+  boolean duplicate;
 
-    public StringPrintStream(PrintStream ps) {
-        this(ps, false);
-    }
+  public List<String> stringList = Collections.synchronizedList(new ArrayList<String>());
 
-    public void print(String s) {
-        if (duplicate)
-            other.print(s);
-        stringList.add(s);
-    }
+  public StringPrintStream(PrintStream ps, boolean duplicate) {
+    super(ps);
+    other = ps;
+    this.duplicate = duplicate;
+  }
 
-    public void println(String s) {
-        if (duplicate)
-            other.println(s);
-        stringList.add(s);
-    }
+  public StringPrintStream(PrintStream ps) {
+    this(ps, false);
+  }
 
-    public void println(Object o) {
-        if (duplicate)
-            other.println(o);
-        stringList.add(o.toString());
-    }
+  public void print(String s) {
+    if (duplicate)
+      other.print(s);
+    stringList.add(s);
+  }
+
+  public void println(String s) {
+    if (duplicate)
+      other.println(s);
+    stringList.add(s);
+  }
+
+  public void println(Object o) {
+    if (duplicate)
+      other.println(o);
+    stringList.add(o.toString());
+  }
 }
