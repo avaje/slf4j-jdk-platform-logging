@@ -1,3 +1,5 @@
+[![Build](https://github.com/avaje/slf4j-jdk-platform-logging/actions/workflows/build.yml/badge.svg)](https://github.com/avaje/slf4j-jdk-platform-logging/actions/workflows/build.yml)
+
 # jsl-slf4j
 
 ## for SLF4J 1.7.x
