@@ -32,13 +32,13 @@ import java.util.ResourceBundle;
 import org.slf4j.Logger;
 
 /**
- * Adapts {@link Logger} to {@link System.Logger}.
+ * Adapts SLF4J 1.7 {@link Logger} to {@link System.Logger}.
  */
 class SLF4JPlatformLogger implements System.Logger {
 
     private final Logger slf4jLogger;
 
-    public SLF4JPlatformLogger(Logger logger) {
+    SLF4JPlatformLogger(Logger logger) {
         this.slf4jLogger = requireNonNull(logger);
     }
 
