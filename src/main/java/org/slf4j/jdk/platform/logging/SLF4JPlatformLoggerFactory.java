@@ -33,27 +33,16 @@ import org.slf4j.LoggerFactory;
 /**
  * Manages instances of {@link SLF4JPlatformLogger}.
  * 
- * @since 1.3.0
  * @author Ceki
- *
  */
-public class SLF4JPlarformLoggerFactory {
-    ConcurrentMap<String, SLF4JPlatformLogger> loggerMap = new ConcurrentHashMap<>();
+class SLF4JPlatformLoggerFactory {
+
+    private final ConcurrentMap<String, SLF4JPlatformLogger> loggerMap = new ConcurrentHashMap<>();
     
     /**
      * Return an appropriate {@link SLF4JPlatformLogger} instance by name.
      */
-    public SLF4JPlatformLogger getLogger(String loggerName) {
-        
-        
-        SLF4JPlatformLogger spla = loggerMap.get(loggerName);
-        if (spla != null) {
-            return spla;
-        } else {
-            Logger slf4jLogger = LoggerFactory.getLogger(loggerName);
-            SLF4JPlatformLogger newInstance = new SLF4JPlatformLogger(slf4jLogger);
-            SLF4JPlatformLogger oldInstance = loggerMap.putIfAbsent(loggerName, newInstance);
-            return oldInstance == null ? newInstance : oldInstance;
-        }
+    SLF4JPlatformLogger logger(String loggerName) {
+        return loggerMap.computeIfAbsent(loggerName, s -> new SLF4JPlatformLogger(LoggerFactory.getLogger(loggerName)));
     }
 }
