@@ -39,11 +39,6 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-//import org.junit.After;
-//import org.junit.AfterClass;
-//import org.junit.BeforeClass;
-//import org.junit.Test;
-
 /**
  * The present test is fragile in the sense that it sets up SimpleLogger
  * with a StringPrintStream and reverts to the old stream when done.
@@ -54,7 +49,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  *
  * @author Ceki G&uuml;lc&uuml;
  */
-public class SLF4JPlatformLoggingTest {
+class SLF4JPlatformLoggingTest {
 
   static final String PREFIX = "org.slf4j.simpleLogger.";
   static final String SIMPLE_LOGGER_FILE_PROPERTY = PREFIX + "logFile";
@@ -67,25 +62,25 @@ public class SLF4JPlatformLoggingTest {
   static StringPrintStream SPS = new StringPrintStream(oldErr, false);
 
   @BeforeAll
-  static public void beforeClass() throws Exception {
+  static void beforeClass() {
     System.setErr(SPS);
     //System.setProperty(SIMPLE_LOGGER_FILE_PROPERTY, targetFile);
     System.setProperty(SIMPLE_LOGGER_THREAD_NAME_PROPERTY, "false");
   }
 
   @AfterAll
-  static public void afterClass() {
+  static void afterClass() {
     System.setErr(oldErr);
     System.clearProperty(SIMPLE_LOGGER_THREAD_NAME_PROPERTY);
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     SPS.stringList.clear();
   }
 
   @Test
-  public void smoke() throws IOException {
+  void smoke() {
     LoggerFinder finder = System.LoggerFinder.getLoggerFinder();
     assertEquals(EXPECTED_FINDER_CLASS, finder.getClass().getName());
     Logger systemLogger = finder.getLogger("smoke", null);
@@ -99,7 +94,7 @@ public class SLF4JPlatformLoggingTest {
   }
 
   @Test
-  public void throwTest() throws IOException {
+  void throwTest() {
     LoggerFinder finder = System.LoggerFinder.getLoggerFinder();
     assertEquals(EXPECTED_FINDER_CLASS, finder.getClass().getName());
 
@@ -116,6 +111,5 @@ public class SLF4JPlatformLoggingTest {
     assertTrue(results.get(2).contains("at "));
     assertTrue(results.get(2).contains(this.getClass().getName()));
   }
-
 
 }

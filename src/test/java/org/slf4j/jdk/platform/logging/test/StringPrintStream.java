@@ -29,38 +29,35 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class StringPrintStream extends PrintStream {
-
-  public static final String LINE_SEP = System.getProperty("line.separator");
+class StringPrintStream extends PrintStream {
 
   PrintStream other;
 
   boolean duplicate;
 
-  public List<String> stringList = Collections.synchronizedList(new ArrayList<String>());
+  List<String> stringList = Collections.synchronizedList(new ArrayList<String>());
 
-  public StringPrintStream(PrintStream ps, boolean duplicate) {
+  StringPrintStream(PrintStream ps, boolean duplicate) {
     super(ps);
     other = ps;
     this.duplicate = duplicate;
   }
 
-  public StringPrintStream(PrintStream ps) {
-    this(ps, false);
-  }
-
+  @Override
   public void print(String s) {
     if (duplicate)
       other.print(s);
     stringList.add(s);
   }
 
+  @Override
   public void println(String s) {
     if (duplicate)
       other.println(s);
     stringList.add(s);
   }
 
+  @Override
   public void println(Object o) {
     if (duplicate)
       other.println(o);
