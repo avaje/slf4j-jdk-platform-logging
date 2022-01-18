@@ -24,14 +24,18 @@
  */
 package org.slf4j.jdk.platform.logging;
 
+import org.slf4j.LoggerFactory;
+
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+
 /**
- * Uses {@link SLF4JPlatformLoggerFactory#logger(String)} to get a logger
- * that is adapted for {@link System.Logger}.
+ * {@link System.LoggerFinder} that uses logging adapters for SLF4J 1.7 Logger.
  */
 public class SLF4JSystemLoggerFinder extends System.LoggerFinder {
 
-    private final SLF4JPlatformLoggerFactory platformLoggerFactory = new SLF4JPlatformLoggerFactory();
-    
+    private final ConcurrentMap<String, SLF4JPlatformLogger> loggerCache = new ConcurrentHashMap<>();
+
     @Override
     public System.Logger getLogger(String name, Module module) {
         // JEP 264[1], which introduced the Platform Logging API,
@@ -46,11 +50,15 @@ public class SLF4JSystemLoggerFinder extends System.LoggerFinder {
         //  > LoggerFinder so that the LoggerFinder can figure out which kind
         //  > of logger to return.
         //
-        // If backends support this distinction and once `LoggerFactory`'s API 
+        // If backends support this distinction and once `LoggerFactory`'s API
         // is updated to forward a module, we should do that here.
         //
         // [1] https://openjdk.java.net/jeps/264
-        return platformLoggerFactory.logger(name);
+        return logger(name);
+    }
+
+    private System.Logger logger(String loggerName) {
+        return loggerCache.computeIfAbsent(loggerName, s -> new SLF4JPlatformLogger(LoggerFactory.getLogger(loggerName)));
     }
 
 }
