@@ -34,7 +34,7 @@ import static java.util.Objects.requireNonNull;
 /**
  * Adapts SLF4J 1.7 {@link Logger} to {@link System.Logger}.
  */
-class SLF4JPlatformLogger implements System.Logger {
+final class SLF4JPlatformLogger implements System.Logger {
 
   private final Logger slf4jLogger;
 
@@ -48,14 +48,14 @@ class SLF4JPlatformLogger implements System.Logger {
   }
 
   @Override
-  public boolean isLoggable(Level jplLevel) {
-    if (jplLevel == Level.ALL) {
+  public boolean isLoggable(Level platformLevel) {
+    if (platformLevel == Level.ALL) {
       return true;
     }
-    if (jplLevel == Level.OFF) {
+    if (platformLevel == Level.OFF) {
       return false;
     }
-    return isEnabledForLevel(toSLF4JLevel(jplLevel));
+    return isEnabledForLevel(toSLF4JLevel(platformLevel));
   }
 
   /**
@@ -83,8 +83,8 @@ class SLF4JPlatformLogger implements System.Logger {
    * <p>
    * This method assumes that Level.ALL or Level.OFF never reach this method.
    */
-  private org.slf4j.event.Level toSLF4JLevel(Level jplLevel) {
-    switch (jplLevel) {
+  private org.slf4j.event.Level toSLF4JLevel(Level platformLevel) {
+    switch (platformLevel) {
       case TRACE:
         return org.slf4j.event.Level.TRACE;
       case DEBUG:
@@ -96,34 +96,34 @@ class SLF4JPlatformLogger implements System.Logger {
       case ERROR:
         return org.slf4j.event.Level.ERROR;
       default:
-        reportUnknownLevel(jplLevel);
+        reportUnknownLevel(platformLevel);
         return org.slf4j.event.Level.TRACE;
     }
   }
 
   @Override
-  public void log(Level jplLevel, ResourceBundle bundle, String msg, Throwable thrown) {
-    log(jplLevel, bundle, msg, thrown, (Object[]) null);
+  public void log(Level platformLevel, ResourceBundle bundle, String msg, Throwable thrown) {
+    log(platformLevel, bundle, msg, thrown, (Object[]) null);
   }
 
   @Override
-  public void log(Level jplLevel, ResourceBundle bundle, String format, Object... params) {
-    log(jplLevel, bundle, format, null, params);
+  public void log(Level platformLevel, ResourceBundle bundle, String format, Object... params) {
+    log(platformLevel, bundle, format, null, params);
   }
 
   /**
-   * Single point of processing taking all possible paramets.
+   * Single point of processing taking all possible parameters.
    */
-  private void log(Level jplLevel, ResourceBundle bundle, String msg, Throwable thrown, Object... params) {
-    if (jplLevel == Level.OFF) {
+  private void log(Level platformLevel, ResourceBundle bundle, String msg, Throwable thrown, Object... params) {
+    if (platformLevel == Level.OFF) {
       return;
     }
-    if (jplLevel == Level.ALL) {
+    if (platformLevel == Level.ALL) {
       performLog(org.slf4j.event.Level.TRACE, bundle, msg, thrown, params);
       return;
     }
 
-    performLog(toSLF4JLevel(jplLevel), bundle, msg, thrown, params);
+    performLog(toSLF4JLevel(platformLevel), bundle, msg, thrown, params);
   }
 
   private void performLog(org.slf4j.event.Level slf4jLevel, ResourceBundle bundle, String msg, Throwable thrown, Object... params) {
@@ -169,9 +169,8 @@ class SLF4JPlatformLogger implements System.Logger {
     return message;
   }
 
-  private void reportUnknownLevel(Level jplLevel) {
-    String message = "Unknown log level [" + jplLevel + "]";
-    IllegalArgumentException iae = new IllegalArgumentException(message);
+  private void reportUnknownLevel(Level platformLevel) {
+    IllegalArgumentException iae = new IllegalArgumentException("Unknown log level [" + platformLevel + "]");
     org.slf4j.helpers.Util.report("Unsupported log level", iae);
   }
 

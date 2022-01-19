@@ -1,5 +1,3 @@
-import io.avaje.logging.slf4j.SLF4JSystemLoggerFinder;
-
 /**
  * Copyright (c) 2004-2021 QOS.ch
  * All rights reserved.
@@ -25,5 +23,5 @@ import io.avaje.logging.slf4j.SLF4JSystemLoggerFinder;
  */
 module io.avaje.logging.slf4j {
   requires org.slf4j;
-  provides java.lang.System.LoggerFinder with SLF4JSystemLoggerFinder;
+  provides java.lang.System.LoggerFinder with io.avaje.logging.slf4j.SLF4JSystemLoggerFinder;
 }

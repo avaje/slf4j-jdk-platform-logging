@@ -32,7 +32,7 @@ import java.util.concurrent.ConcurrentMap;
 /**
  * {@link System.LoggerFinder} that uses logging adapters for SLF4J 1.7 Logger.
  */
-public class SLF4JSystemLoggerFinder extends System.LoggerFinder {
+public final class SLF4JSystemLoggerFinder extends System.LoggerFinder {
 
   private final ConcurrentMap<String, SLF4JPlatformLogger> loggerCache = new ConcurrentHashMap<>();
 
