@@ -10,14 +10,14 @@
 
   <groupId>io.avaje</groupId>
   <artifactId>avaje-slf4j-jpl</artifactId>
-  <version>1.0</version>
+  <version>1.1-SNAPSHOT</version>
 
   <name>SLF4J 1.7 JDK Platform Logging Integration</name>
   <description>Integrated SLF4J 1.7 with the Platform Logging API added by JEP 264 in Java 9</description>
 
   <scm>
     <developerConnection>scm:git:git@github.com:avaje/slf4j-jdk-platform-logging.git</developerConnection>
-    <tag>avaje-slf4j-jpl-1.0</tag>
+    <tag>HEAD</tag>
   </scm>
 
   <properties>
