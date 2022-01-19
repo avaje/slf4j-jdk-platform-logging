@@ -11,17 +11,27 @@
   </parent>
 
   <groupId>io.avaje</groupId>
-  <artifactId>jsl-slf4j</artifactId>
+  <artifactId>avaje-logging-jsl-slf4j</artifactId>
   <version>1.0-SNAPSHOT</version>
 
   <name>SLF4J 1.7 JDK Platform Logging Integration</name>
   <description>Integrated SLF4J 1.7 with the Platform Logging API added by JEP 264 in Java 9</description>
+
+  <scm>
+    <developerConnection>scm:git:git@github.com:avaje/slf4j-jdk-platform-logging.git</developerConnection>
+    <tag>HEAD</tag>
+  </scm>
+
+  <properties>
+    <nexus.staging.autoReleaseAfterClose>true</nexus.staging.autoReleaseAfterClose>
+  </properties>
 
   <dependencies>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
       <version>1.7.32</version>
+      <scope>provided</scope>
     </dependency>
 
     <dependency>

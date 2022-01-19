@@ -13,6 +13,12 @@ backend your application has configured).
 This works by registered a `System.LoggerFinder` that provides a `System.Logger`
 that is an adapter to `SLF4J 1.7 Logger`.
 
+## Why not part of SLF4J project?
+
+Ideally this would be part of the SLF4J project and at some point it might be.
+At the moment [Ceki is not keen](https://twitter.com/ceki/status/1483198536107839492)
+so until that changes we have `io.avaje : jsl-slf4j` for use with SLF4J 1.7.x.
+
 
 ## SLF4J 2.x
 
