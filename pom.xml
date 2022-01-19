@@ -11,7 +11,7 @@
   </parent>
 
   <groupId>io.avaje</groupId>
-  <artifactId>avaje-logging-jsl-slf4j</artifactId>
+  <artifactId>avaje-slf4j-jpl</artifactId>
   <version>1.0-SNAPSHOT</version>
 
   <name>SLF4J 1.7 JDK Platform Logging Integration</name>
@@ -23,7 +23,7 @@
   </scm>
 
   <properties>
-    <nexus.staging.autoReleaseAfterClose>true</nexus.staging.autoReleaseAfterClose>
+    <nexus.staging.autoReleaseAfterClose>false</nexus.staging.autoReleaseAfterClose>
   </properties>
 
   <dependencies>
