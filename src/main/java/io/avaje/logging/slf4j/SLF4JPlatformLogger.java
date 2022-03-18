@@ -26,6 +26,7 @@ package io.avaje.logging.slf4j;
 
 import org.slf4j.Logger;
 
+import java.text.MessageFormat;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
@@ -164,7 +165,7 @@ final class SLF4JPlatformLogger implements System.Logger {
   private String message(ResourceBundle bundle, String msg, Object[] params) {
     String message = resourceStringOrMessage(bundle, msg);
     if (params != null && params.length > 0) {
-      message = String.format(message, params);
+      message = MessageFormat.format(message, params);
     }
     return message;
   }
