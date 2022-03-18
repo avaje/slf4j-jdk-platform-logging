@@ -11,7 +11,7 @@ Requires Java 11 or greater.
 <dependency>
   <groupId>io.avaje</groupId>
   <artifactId>avaje-slf4j-jpl</artifactId>
-  <version>1.0</version>
+  <version>1.1</version>
 </dependency>
 ```
 
