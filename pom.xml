@@ -5,12 +5,12 @@
   <parent>
     <groupId>org.avaje</groupId>
     <artifactId>java11-oss</artifactId>
-    <version>3.6</version>
+    <version>3.9</version>
   </parent>
 
   <groupId>io.avaje</groupId>
   <artifactId>avaje-slf4j-jpl</artifactId>
-  <version>1.1</version>
+  <version>1.2</version>
 
   <name>SLF4J 1.7 JDK Platform Logging Integration</name>
   <description>Integrated SLF4J 1.7 with the Platform Logging API added by JEP 264 in Java 9</description>
@@ -28,14 +28,14 @@
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
-      <version>1.7.32</version>
+      <version>1.7.36</version>
       <scope>provided</scope>
     </dependency>
 
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
-      <version>1.7.32</version>
+      <version>1.7.36</version>
       <scope>test</scope>
     </dependency>
 
